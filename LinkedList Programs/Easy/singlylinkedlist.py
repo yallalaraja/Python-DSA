@@ -36,6 +36,16 @@ class LinkedList:
             node = Node(data,None)
         itr.next = node
 
+    def remove_at_end(self):
+        if self.head is None:
+            print("Nothing in list to remove")
+            return
+        
+        itr = self.head
+        while itr.next.next:
+            itr = itr.next
+        itr.next = None
+
     def insert_at(self,index,data):
         if index < 0 or index>=ll.get_length():
             raise ValueError('Index should not be negative')
@@ -57,6 +67,46 @@ class LinkedList:
                 itr.next = node
                 return
 
+    def remove_at(self,index):
+        if self.head is None:
+            print("Nothing in list to remove")
+            return 
+
+        if index < 0 or index >= ll.get_length():
+            print('Index should not be negative or not greater than the length of list')
+
+        if index == 0:
+            self.head = self.head.next
+            return 
+
+        count = 0
+        itr = self.head
+        while itr.next:
+            count+=1
+            itr = itr.next
+            if count == index-1:
+                itr.next = itr.next.next
+                return 
+
+    def insert_values(self,data_list):
+        for data in data_list:
+            ll.insert_at_end(data)
+        
+    def remove_value(self, data):
+        if self.head is None: 
+            print("Nothing in the list to remove")
+            return
+
+    # Handle removal of head node(s)
+        while self.head and self.head.data == data:
+            self.head = self.head.next
+
+        itr = self.head
+        while itr and itr.next:
+            if itr.next.data == data: 
+                itr.next = itr.next.next  
+            else:
+                itr = itr.next
 
     def printll(self):
         if self.head is None:
@@ -78,5 +128,9 @@ ll.insert_at_end(4)
 ll.insert_at_end(5)
 ll.insert_at(0,0)
 ll.remove_at_beginning()
+ll.remove_at_end()
+ll.remove_at(2)
+ll.insert_values([1,2,3])
+ll.remove_value(1)
 ll.printll()
 print("Linked list length is",ll.get_length())
