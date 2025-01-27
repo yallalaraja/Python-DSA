@@ -29,11 +29,13 @@ class LinkedList:
     def insert_at_end(self,data):
         if self.head is None:
             node = Node(data)
+            self.head = node
             return
+
         itr = self.head
         while itr.next:
             itr = itr.next
-            node = Node(data,None)
+        node = Node(data,None)
         itr.next = node
 
     def remove_at_end(self):
@@ -72,8 +74,9 @@ class LinkedList:
             print("Nothing in list to remove")
             return 
 
-        if index < 0 or index >= ll.get_length():
+        if index < 0 or index >= self.get_length():
             print('Index should not be negative or not greater than the length of list')
+            return
 
         if index == 0:
             self.head = self.head.next
@@ -90,7 +93,20 @@ class LinkedList:
 
     def insert_values(self,data_list):
         for data in data_list:
-            ll.insert_at_end(data)
+            self.insert_at_end(data)
+
+    def insert_after_value(self,data_after,data):
+        if self.head is None:
+            print("linked list is empty")
+            return
+        
+        itr = self.head
+        while itr:
+            if itr.data == data_after:
+                node = Node(data,itr.next)
+                itr.next = node
+                break
+            itr = itr.next
         
     def remove_value(self, data):
         if self.head is None: 
@@ -132,5 +148,6 @@ ll.remove_at_end()
 ll.remove_at(2)
 ll.insert_values([1,2,3])
 ll.remove_value(1)
+ll.insert_after_value(2,7)
 ll.printll()
 print("Linked list length is",ll.get_length())
